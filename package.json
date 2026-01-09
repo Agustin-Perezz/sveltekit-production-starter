@@ -61,6 +61,8 @@
   },
   "dependencies": {
     "axios": "^1.10.0",
-    "svelte-french-toast": "^1.2.0"
+    "svelte-french-toast": "^1.2.0",
+    "sveltekit-superforms": "^2.29.1",
+    "zod": "^4.3.5"
   }
 }
