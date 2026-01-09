@@ -9,7 +9,7 @@
   type InputType = Exclude<HTMLInputTypeAttribute, 'file'>;
 
   export type FormFieldProps = WithElementRef<
-    Omit<HTMLInputAttributes, 'type'>
+    Omit<HTMLInputAttributes, 'type' | 'files'>
   > & {
     label: string;
     name: string;
