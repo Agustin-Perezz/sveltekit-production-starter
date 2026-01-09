@@ -5,7 +5,6 @@ import { authenticateUser } from '$lib/server/auth';
 export const handle: Handle = async ({ event, resolve }) => {
   event.locals.user = authenticateUser(event);
 
-  console.log(event.locals.user);
   if (event.url.pathname.startsWith('/protected')) {
     if (!event.locals.user) {
       throw redirect(303, '/');
