@@ -1,89 +1,107 @@
-# Svelte Template
+# Svelte Raw Template
 
-Minimal SvelteKit template with Firebase, Tailwind CSS, TypeScript, Playwright, and CI/CD via GitHub Actions.
+A production-ready SvelteKit starter template built with shift-left quality practices. Catch bugs early, ship with confidence.
+
+## Philosophy
+
+This template embraces the **shift-left** methodology—integrating quality gates at every stage of development rather than catching issues in production. Every commit is linted, every push is tested, and every merge is validated through CI/CD.
+
+**Fail fast, fix early.**
+
+## Quality Gates
+
+```mermaid
+flowchart LR
+    Code --> PreCommit["Pre-commit: lint-staged"]
+    PreCommit --> PrePush["Pre-push: E2E tests"]
+    PrePush --> CI["CI Pipeline"]
+    CI --> Deploy
+```
+
+| Stage | Trigger | Actions |
+|-------|---------|---------|
+| Pre-commit | `git commit` | Prettier + ESLint on staged files |
+| Pre-push | `git push` | Full Playwright E2E test suite |
+| CI/CD | Push/PR to main | Lint, type-check, test, build |
 
 ## Technologies
 
+**Core**
 - SvelteKit
 - TypeScript
-- Tailwind CSS
-- Firebase JS SDK
-- Playwright (E2E testing)
-- ESLint & Prettier
-- Husky (Git hooks)
 - Vite
+
+**Styling**
+- Tailwind CSS v4
+- Bits UI
+- Tailwind Merge & Variants
+
+**Quality**
+- ESLint & Prettier
+- Playwright (E2E)
+- Husky (Git hooks)
+- lint-staged
+
+**Validation**
+- Zod
+- Superforms
+
+**HTTP**
 - Axios
 
 ## Getting Started
 
 Install dependencies:
 
-```
+```bash
 pnpm install
 ```
 
 Start the development server:
 
-```
-pnpm run dev
+```bash
+pnpm dev
 ```
 
 Build for production:
 
-```
-pnpm run build
+```bash
+pnpm build
 ```
 
 Preview the production build:
 
-```
-pnpm run preview
-```
-
-Lint and format code:
-
-```
-pnpm run lint
-pnpm run format
+```bash
+pnpm preview
 ```
 
-Run type checks:
+## Commands
 
-```
-pnpm run check
-```
-
-Run E2E tests:
-
-```
-pnpm run test
-```
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview production build |
+| `pnpm check` | Run type checks |
+| `pnpm lint` | Lint and check formatting |
+| `pnpm format` | Format code with Prettier |
+| `pnpm test` | Run E2E tests |
 
 ## Environment Variables
 
-Set the following variables in your .env file:
+Create a `.env` file with the following variables:
 
 ```
 VITE_API_BASE_URL=your_base_api
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_APP_ID=your_app_id
 ```
 
-## CI/CD
+## CI/CD Pipeline
 
-GitHub Actions workflow runs on push to main:
+GitHub Actions workflow triggers on push and pull requests to main:
 
-- Installs dependencies
-- Lints and formats code
-- Runs type checks
-- Installs Playwright browsers
-- Runs E2E tests
-- Builds the app
-- Deploys to GitHub Pages
-
-## Husky Git Hooks
-
-- pre-commit: runs lint-staged
-- pre-push: runs tests
+1. Install dependencies (pnpm)
+2. Run linter and formatter checks
+3. Run TypeScript type checks
+4. Install Playwright browsers
+5. Execute E2E test suite
+6. Build the application
