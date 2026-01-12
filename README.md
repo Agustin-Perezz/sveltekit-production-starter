@@ -13,16 +13,18 @@ This template embraces the **shift-left** methodology—integrating quality gate
 ```mermaid
 flowchart LR
     Code --> PreCommit["Pre-commit: lint-staged"]
-    PreCommit --> PrePush["Pre-push: E2E tests"]
+    PreCommit --> PrePush["Pre-push: E2E tests + Coverage"]
     PrePush --> CI["CI Pipeline"]
+    CI --> Sentry["Sentry Monitoring"]
     CI --> Deploy
 ```
 
 | Stage | Trigger | Actions |
 |-------|---------|---------|
 | Pre-commit | `git commit` | Prettier + ESLint on staged files |
-| Pre-push | `git push` | Full Playwright E2E test suite |
+| Pre-push | `git push` | Full Playwright E2E test suite with coverage |
 | CI/CD | Push/PR to main | Lint, type-check, test, build |
+| Runtime | Production | Sentry error tracking & performance monitoring |
 
 ## Technologies
 
@@ -39,8 +41,12 @@ flowchart LR
 **Quality**
 - ESLint & Prettier
 - Playwright (E2E)
+- Monocart Reporter (V8 Code Coverage)
 - Husky (Git hooks)
 - lint-staged
+
+**Observability**
+- Sentry (Error tracking & Performance monitoring)
 
 **Validation**
 - Zod
@@ -86,13 +92,29 @@ pnpm preview
 | `pnpm lint` | Lint and check formatting |
 | `pnpm format` | Format code with Prettier |
 | `pnpm test` | Run E2E tests |
+| `pnpm test:show-report` | Open Monocart test report |
+| `pnpm coverage:show-report` | Open V8 coverage report |
+
+## Code Coverage
+
+E2E tests collect V8 code coverage using Playwright's built-in coverage API and Monocart Reporter.
+
+**Report Formats**
+- V8 HTML Report: `./coverage/e2e/v8/index.html`
+- LCOV: `./coverage/e2e/lcov/code-coverage.lcov.info`
+- Cobertura XML: `./coverage/e2e/cobertura/code-coverage.cobertura.xml`
 
 ## Environment Variables
 
 Create a `.env` file with the following variables:
 
 ```
-VITE_API_BASE_URL=your_base_api
+VITE_API_BASE_URL=your-base-api
+VITE_SENTRY_DSN=your-sentry-dsn
+SENTRY_DSN=your-sentry-dsn
+SENTRY_ORG=your-sentry-org
+SENTRY_PROJECT=your-sentry-project
+SENTRY_AUTH_TOKEN=your-sentry-auth-token
 ```
 
 ## CI/CD Pipeline
