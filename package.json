@@ -66,6 +66,7 @@
     ]
   },
   "dependencies": {
+    "@sentry/sveltekit": "^10.32.1",
     "axios": "^1.10.0",
     "svelte-french-toast": "^1.2.0",
     "sveltekit-superforms": "^2.29.1",

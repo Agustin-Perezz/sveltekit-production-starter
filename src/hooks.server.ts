@@ -1,8 +1,16 @@
+import * as Sentry from '@sentry/sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
 
 import { authenticateUser } from '$lib/server/auth';
 
-export const handle: Handle = async ({ event, resolve }) => {
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 1.0
+});
+
+const authHandle: Handle = async ({ event, resolve }) => {
   event.locals.user = authenticateUser(event);
 
   if (event.url.pathname.startsWith('/protected')) {
@@ -15,3 +23,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   return response;
 };
+
+export const handle = sequence(Sentry.sentryHandle(), authHandle);
+
+export const handleError = Sentry.handleErrorWithSentry();
