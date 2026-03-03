@@ -2,9 +2,11 @@ import * as Sentry from '@sentry/sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
+import { NodeEnv } from '$lib/env';
 import { authenticateUser } from '$lib/server/auth';
 
 Sentry.init({
+  enabled: process.env.NODE_ENV === NodeEnv.Production,
   dsn: process.env.SENTRY_DSN,
   environment: process.env.NODE_ENV,
   tracesSampleRate: 1.0
