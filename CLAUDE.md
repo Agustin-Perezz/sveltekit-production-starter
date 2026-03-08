@@ -59,14 +59,17 @@ const detail = $derived(new MyClass(data.foo));
 Every new SvelteKit page MUST be decomposed into three layers:
 
 **Layer 1 — `.svelte.ts` class (all logic)**
+
 - State, constants, helper functions, derived values
 - Nothing from this list belongs in `+page.svelte`
 
 **Layer 2 — Focused sub-components (one concern each)**
+
 - Each distinct visual concern gets its own `.svelte` file
 - Sub-components receive only the props they need
 
 **Layer 3 — `+page.svelte` (pure orchestration)**
+
 - Instantiates the `.svelte.ts` class via `$derived(new MyClass(data.x))`
 - Imports and composes sub-components
 - Contains zero inline logic, constants, or helper functions
@@ -86,8 +89,8 @@ export class UserDashboardState {
 ```svelte
 <!-- +page.svelte — orchestrates, owns no logic -->
 <script lang="ts">
-  import { UserDashboardState } from './userDashboard.svelte';
   import UserAvatar from './UserAvatar.svelte';
+  import { UserDashboardState } from './userDashboard.svelte';
   import UserStats from './UserStats.svelte';
 
   const { data } = $props();
@@ -134,7 +137,9 @@ function isAdmin(user: User): user is Admin {
 }
 
 function assertIsString(val: unknown): asserts val is string {
-  if (typeof val !== 'string') { throw new Error('Not a string'); }
+  if (typeof val !== 'string') {
+    throw new Error('Not a string');
+  }
 }
 ```
 
