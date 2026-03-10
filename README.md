@@ -8,6 +8,118 @@ This template embraces the **shift-left** methodology—integrating quality gate
 
 **Fail fast, fix early.**
 
+## Project Structure
+
+```
+├── 📁 .claude
+│   ├── 📁 rules
+│   │   ├── 📝 coding-conventions.md
+│   │   ├── 📝 svelte-standards.md
+│   │   └── 📝 typescript-standards.md
+│   ├── 📁 skills
+│   │   └── 📁 plan-feature
+│   │       └── 📝 SKILL.md
+│   └── ⚙️ settings.json
+├── 📁 .github
+│   └── 📁 workflows
+│       └── ⚙️ main.yml
+├── 📁 .husky
+│   ├── 📄 pre-commit
+│   └── 📄 pre-push
+├── 📁 e2e
+├── 📁 src
+│   ├── 📁 lib
+│   │   ├── 📁 alerts
+│   │   │   └── 📄 toast.ts
+│   │   ├── 📁 components
+│   │   │   └── 📁 ui
+│   │   │       ├── 📁 button
+│   │   │       ├── 📁 card
+│   │   │       ├── 📁 form-field
+│   │   │       ├── 📁 input
+│   │   │       ├── 📁 label
+│   │   │       └── 📁 pagination
+│   │   ├── 📁 data
+│   │   ├── 📁 server
+│   │   │   └── 📄 auth.ts
+│   │   ├── 📄 axios.ts
+│   │   ├── 📄 env.ts
+│   │   └── 📄 utils.ts
+│   ├── 📁 routes
+│   │   ├── 📁 pokemons
+│   │   │   ├── 📁 components
+│   │   │   │   ├── 📄 PokemonCard.svelte
+│   │   │   │   ├── 📄 PokemonEmptyState.svelte
+│   │   │   │   ├── 📄 PokemonGrid.svelte
+│   │   │   │   └── 📄 PokemonSearchBar.svelte
+│   │   │   ├── 📁 types
+│   │   │   │   └── 📄 pokemon.ts
+│   │   │   ├── 📄 +page.server.ts
+│   │   │   ├── 📄 +page.svelte
+│   │   │   └── 📄 pokemonsPage.svelte.ts
+│   │   ├── 📁 protected
+│   │   │   ├── 📄 +page.server.ts
+│   │   │   └── 📄 +page.svelte
+│   │   ├── 📄 +layout.js
+│   │   ├── 📄 +layout.svelte
+│   │   └── 📄 +page.svelte
+│   ├── 🎨 app.css
+│   ├── 📄 app.d.ts
+│   ├── 🌐 app.html
+│   ├── 📄 hooks.client.ts
+│   └── 📄 hooks.server.ts
+├── 📁 static
+│   └── 🖼️ favicon.svg
+├── ⚙️ .editorconfig
+├── ⚙️ .env.dist
+├── ⚙️ .gitignore
+├── ⚙️ .npmrc
+├── ⚙️ .prettierignore
+├── ⚙️ .prettierrc
+├── 📝 CLAUDE.md
+├── 📝 README.md
+├── ⚙️ components.json
+├── 📄 eslint.config.js
+├── ⚙️ package.json
+├── 📄 playwright.config.ts
+├── 📄 playwright.monocart-reporter.ts
+├── ⚙️ pnpm-lock.yaml
+├── 📄 svelte.config.js
+├── ⚙️ tsconfig.json
+└── 📄 vite.config.ts
+```
+
+## AI-Assisted Development (`.claude/`)
+
+This project includes a `.claude/` configuration folder that enables **engineering-grade AI assistance** via [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It encodes the project's coding standards, architectural patterns, and workflows so the AI follows the same rules a senior engineer would.
+
+### What It Provides
+
+- **Scoped rules** — Coding conventions activate only on relevant file types (e.g., Svelte standards apply to `*.svelte` files, TypeScript standards to `*.ts` files), so the AI always follows the right patterns in the right context.
+- **Custom skills** — Reusable prompts for common workflows (e.g., `plan-feature` generates an engineering checklist before writing code).
+- **Post-edit hooks** — Automated ESLint runs after every file edit, catching issues immediately.
+- **Project instructions (`CLAUDE.md`)** — A top-level file that gives the AI full context on the architecture, libraries, and quality pipeline.
+
+### `.claude/` Structure
+
+```
+.claude/
+  rules/
+    coding-conventions.md   # Brace style, no inline returns
+    svelte-standards.md     # Svelte 5 Runes, SvelteKit patterns, SOLID
+    typescript-standards.md # satisfies, type guards, strict rules
+  skills/
+    plan-feature/
+      SKILL.md              # Engineering checklist workflow
+  settings.json             # Post-edit hooks, tool permissions
+```
+
+### How to Use
+
+1. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+2. Open the project — Claude Code automatically reads `CLAUDE.md` and `.claude/`
+3. Ask it to build features, fix bugs, or refactor — it will follow the project's standards
+
 ## Quality Gates
 
 ```mermaid
