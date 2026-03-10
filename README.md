@@ -11,50 +11,82 @@ This template embraces the **shift-left** methodology—integrating quality gate
 ## Project Structure
 
 ```
-sveltekit-production-starter/
-  .claude/                    # AI-assisted development config (see below)
-  .github/
-    workflows/
-      main.yml                # CI pipeline: lint, type-check, test, build
-  .husky/
-    pre-commit                # Runs lint-staged (Prettier + ESLint)
-    pre-push                  # Runs full E2E test suite
-  e2e/
-    _shared/
-      fixtures/               # Playwright custom fixtures
-      app-fixtures.ts         # App-level fixture composition
-    demo.test.ts              # E2E test example
-  src/
-    lib/
-      alerts/                 # Alert/notification utilities
-      components/
-        ui/                   # Reusable UI components (shadcn-svelte)
-      data/                   # Static data / constants
-      server/                 # Server-only code (auth, etc.)
-      axios.ts                # Configured HTTP client
-      env.ts                  # Environment variable access
-      utils.ts                # Shared utility functions
-    routes/
-      pokemons/               # Pokemon listing page
-      protected/              # Server-guarded route
-      +layout.js              # Root layout config
-      +layout.svelte          # Root layout component
-      +page.svelte            # Home page
-    app.css                   # Global styles (Tailwind)
-    app.d.ts                  # App-level type declarations
-    app.html                  # HTML shell
-    hooks.client.ts           # Client hooks (Sentry)
-    hooks.server.ts           # Server hooks (Sentry)
-  static/
-    favicon.svg               # Site favicon
-  CLAUDE.md                   # AI project instructions
-  components.json             # shadcn-svelte config
-  eslint.config.js            # ESLint configuration
-  playwright.config.ts        # Playwright test config
-  playwright.monocart-reporter.ts  # Coverage reporter config
-  svelte.config.js            # SvelteKit configuration
-  tsconfig.json               # TypeScript configuration
-  vite.config.ts              # Vite configuration
+├── 📁 .claude
+│   ├── 📁 rules
+│   │   ├── 📝 coding-conventions.md
+│   │   ├── 📝 svelte-standards.md
+│   │   └── 📝 typescript-standards.md
+│   ├── 📁 skills
+│   │   └── 📁 plan-feature
+│   │       └── 📝 SKILL.md
+│   └── ⚙️ settings.json
+├── 📁 .github
+│   └── 📁 workflows
+│       └── ⚙️ main.yml
+├── 📁 .husky
+│   ├── 📄 pre-commit
+│   └── 📄 pre-push
+├── 📁 e2e
+├── 📁 src
+│   ├── 📁 lib
+│   │   ├── 📁 alerts
+│   │   │   └── 📄 toast.ts
+│   │   ├── 📁 components
+│   │   │   └── 📁 ui
+│   │   │       ├── 📁 button
+│   │   │       ├── 📁 card
+│   │   │       ├── 📁 form-field
+│   │   │       ├── 📁 input
+│   │   │       ├── 📁 label
+│   │   │       └── 📁 pagination
+│   │   ├── 📁 data
+│   │   ├── 📁 server
+│   │   │   └── 📄 auth.ts
+│   │   ├── 📄 axios.ts
+│   │   ├── 📄 env.ts
+│   │   └── 📄 utils.ts
+│   ├── 📁 routes
+│   │   ├── 📁 pokemons
+│   │   │   ├── 📁 components
+│   │   │   │   ├── 📄 PokemonCard.svelte
+│   │   │   │   ├── 📄 PokemonEmptyState.svelte
+│   │   │   │   ├── 📄 PokemonGrid.svelte
+│   │   │   │   └── 📄 PokemonSearchBar.svelte
+│   │   │   ├── 📁 types
+│   │   │   │   └── 📄 pokemon.ts
+│   │   │   ├── 📄 +page.server.ts
+│   │   │   ├── 📄 +page.svelte
+│   │   │   └── 📄 pokemonsPage.svelte.ts
+│   │   ├── 📁 protected
+│   │   │   ├── 📄 +page.server.ts
+│   │   │   └── 📄 +page.svelte
+│   │   ├── 📄 +layout.js
+│   │   ├── 📄 +layout.svelte
+│   │   └── 📄 +page.svelte
+│   ├── 🎨 app.css
+│   ├── 📄 app.d.ts
+│   ├── 🌐 app.html
+│   ├── 📄 hooks.client.ts
+│   └── 📄 hooks.server.ts
+├── 📁 static
+│   └── 🖼️ favicon.svg
+├── ⚙️ .editorconfig
+├── ⚙️ .env.dist
+├── ⚙️ .gitignore
+├── ⚙️ .npmrc
+├── ⚙️ .prettierignore
+├── ⚙️ .prettierrc
+├── 📝 CLAUDE.md
+├── 📝 README.md
+├── ⚙️ components.json
+├── 📄 eslint.config.js
+├── ⚙️ package.json
+├── 📄 playwright.config.ts
+├── 📄 playwright.monocart-reporter.ts
+├── ⚙️ pnpm-lock.yaml
+├── 📄 svelte.config.js
+├── ⚙️ tsconfig.json
+└── 📄 vite.config.ts
 ```
 
 ## AI-Assisted Development (`.claude/`)
