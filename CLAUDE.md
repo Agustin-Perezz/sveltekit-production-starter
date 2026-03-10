@@ -4,6 +4,52 @@ This file provides guidance to Claude Code when working with this repository.
 
 ---
 
+## Project Overview
+
+**sveltekit-production-starter** is a production-ready SvelteKit starter template built around **shift-left quality practices** — catching bugs at the earliest possible stage rather than in production.
+
+### What It Provides
+
+A fully wired foundation for building SvelteKit applications with:
+
+- **Svelte 5 (Runes API)** — reactive state with `$state`, `$derived`, `$effect`, and `$props`
+- **TypeScript** — strict mode, no `any`, leveraging `satisfies` and utility types
+- **Tailwind CSS v4** — utility-first styling with `tailwind-merge` and `tailwind-variants`
+- **shadcn-svelte (Bits UI)** — accessible, composable UI primitives (`Button`, `Input`, `Label`, `FormField`)
+- **sveltekit-superforms + Zod** — type-safe form handling with server-side validation
+- **Axios** — configured HTTP client for API communication
+- **Sentry** — error tracking and performance monitoring (production-only, wired into both client and server hooks)
+
+### Quality Pipeline
+
+Every code change passes through layered quality gates:
+
+1. **Pre-commit** — `lint-staged` runs Prettier + ESLint on staged files via Husky
+2. **Pre-push** — Full Playwright E2E test suite with V8 code coverage
+3. **CI (GitHub Actions)** — Lint, type-check, E2E tests, and production build on every push/PR to `main`
+4. **Runtime** — Sentry monitors errors and performance in production
+
+### Existing Routes
+
+- `/` — Home page
+- `/protected` — Server-guarded page with `+page.server.ts` auth logic
+- `/pokemon/[id]` — Dynamic route (scaffold)
+- `/images` — Image route (scaffold)
+
+### Key Libraries
+
+| Category | Library |
+|----------|---------|
+| UI Components | `bits-ui`, shadcn-svelte patterns |
+| Forms | `sveltekit-superforms`, `zod` |
+| HTTP | `axios` |
+| Styling | `tailwindcss` v4, `tailwind-merge`, `tailwind-variants`, `tw-animate-css` |
+| Monitoring | `@sentry/sveltekit` |
+| Testing | `@playwright/test`, `monocart-reporter` (V8 coverage) |
+| Code Quality | `eslint`, `prettier`, `husky`, `lint-staged` |
+
+---
+
 ## Architecture
 
 ### Key Directories
@@ -20,139 +66,10 @@ Uses **sveltekit-superforms** with **Zod** schemas for validation. Form componen
 
 ---
 
-## Svelte 5 & SvelteKit Standards
+## Coding Standards
 
-### Runes API
+Svelte 5, SOLID principles, and TypeScript standards are enforced via scoped rules in `.claude/rules/`:
 
-- Use `$state()` for reactive data and `$derived()` for computed values. Abandon Svelte 4's `let` and `$:`.
-- Use `$effect` only for side effects (DOM manipulation, third-party libs). Never use it to sync state.
-- Use `let { prop } = $props()`. Use `$bindable()` only when two-way binding is strictly necessary.
-- Extract logic into `.svelte.ts` files using runes to keep components lean and testable.
-
-### SvelteKit Patterns
-
-- **Server-First:** Use `+page.server.ts` for data fetching and Form Actions for mutations.
-- **Progressive Enhancement:** Always use `use:enhance` on forms.
-- **Event Handling:** Use Svelte 5 attribute pattern (`onclick={...}`) instead of `on:click`.
-- **Error Handling:** Use SvelteKit's `error()` and `redirect()` helpers within load functions.
-
-### Reactivity with `$props()` — CRITICAL
-
-NEVER destructure `$props()` or pass values directly into constructors at the top level. Always wrap in `$derived`.
-
-```ts
-// BAD — loses reactivity
-const { pokemon } = data;
-const detail = new MyClass(data.foo);
-
-// GOOD
-const pokemon = $derived(data.pokemon);
-const detail = $derived(new MyClass(data.foo));
-```
-
----
-
-## SOLID Principles (Adapted for Svelte)
-
-### S — Single Responsibility
-
-Every new SvelteKit page MUST be decomposed into three layers:
-
-**Layer 1 — `.svelte.ts` class (all logic)**
-
-- State, constants, helper functions, derived values
-- Nothing from this list belongs in `+page.svelte`
-
-**Layer 2 — Focused sub-components (one concern each)**
-
-- Each distinct visual concern gets its own `.svelte` file
-- Sub-components receive only the props they need
-
-**Layer 3 — `+page.svelte` (pure orchestration)**
-
-- Instantiates the `.svelte.ts` class via `$derived(new MyClass(data.x))`
-- Imports and composes sub-components
-- Contains zero inline logic, constants, or helper functions
-
-```ts
-// userDashboard.svelte.ts — owns ALL state & logic
-export class UserDashboardState {
-  user = $state<User | null>(null);
-  activities = $derived(this.user?.activities ?? []);
-
-  get formattedJoinDate() {
-    return new Intl.DateTimeFormat('en').format(this.user?.joinedAt);
-  }
-}
-```
-
-```svelte
-<!-- +page.svelte — orchestrates, owns no logic -->
-<script lang="ts">
-  import UserAvatar from './UserAvatar.svelte';
-  import { UserDashboardState } from './userDashboard.svelte';
-  import UserStats from './UserStats.svelte';
-
-  const { data } = $props();
-  const dashboard = $derived(new UserDashboardState(data.userId));
-</script>
-```
-
-### O — Open/Closed
-
-Use Svelte 5 **Snippets** (`{#snippet ...}`) to let consumers extend component UI without modifying the component's source.
-
-### L — Liskov Substitution
-
-Wrapper components (e.g. a custom `Button`) must accept and spread all standard HTML attributes of the element they wrap (`HTMLButtonAttributes`).
-
-### I — Interface Segregation
-
-Pass only the specific props a component needs. Never pass a large object when only one field is used.
-
-### D — Dependency Inversion
-
-Use `getContext`/`setContext` (wrapped in type-safe helpers) to inject dependencies instead of hard-coding imports to specific instances.
-
----
-
-## TypeScript Standards
-
-### `satisfies` Operator
-
-Use `satisfies` to validate an object matches a type while retaining the most specific inferred type.
-
-```ts
-const config = {
-  endpoint: '/api/v1',
-  retries: 3
-} satisfies Record<string, string | number>;
-```
-
-### Type Guards & Assertion Functions
-
-```ts
-function isAdmin(user: User): user is Admin {
-  return (user as Admin).role === Role.Admin;
-}
-
-function assertIsString(val: unknown): asserts val is string {
-  if (typeof val !== 'string') {
-    throw new Error('Not a string');
-  }
-}
-```
-
-### Utility Types
-
-Prefer built-in utilities to keep types DRY:
-
-- `Pick<T, K>` / `Omit<T, K>` — narrow down props
-- `ReturnType<T>` — capture the output type of a function
-- `ComponentProps<T>` — extract props from a Svelte component for wrapping
-
-### Strict Rules
-
-- `any` is forbidden. Use `unknown` with type guards when the type is truly uncertain.
-- Use `satisfies` instead of explicit type annotations when you need both validation and inference.
-- No magic strings: never inline raw string literals for finite named sets; always use an `enum`.
+- `svelte-standards.md` — Runes API, SvelteKit patterns, SOLID principles (activates on `*.svelte`, `*.svelte.ts`)
+- `typescript-standards.md` — `satisfies`, type guards, strict rules (activates on `*.ts`, `*.svelte.ts`)
+- `clean-architecture.md` — Domain/use-case layer boundaries (activates on `src/domain/**`, `src/use-cases/**`)
