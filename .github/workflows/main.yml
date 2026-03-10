@@ -44,6 +44,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Create .env from .env.dist
+        run: cp .env.dist .env
       - name: Svelte & TypeScript check
         run: pnpm check
 
@@ -76,6 +78,8 @@ jobs:
       - name: Install Playwright system dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
+      - name: Create .env from .env.dist
+        run: cp .env.dist .env
       - name: Run E2E tests
         run: pnpm test
       - name: Upload test report
@@ -108,5 +112,7 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Create .env from .env.dist
+        run: cp .env.dist .env
       - name: Build
         run: pnpm build
