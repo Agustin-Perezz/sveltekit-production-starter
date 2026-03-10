@@ -8,6 +8,86 @@ This template embraces the **shift-left** methodology—integrating quality gate
 
 **Fail fast, fix early.**
 
+## Project Structure
+
+```
+sveltekit-production-starter/
+  .claude/                    # AI-assisted development config (see below)
+  .github/
+    workflows/
+      main.yml                # CI pipeline: lint, type-check, test, build
+  .husky/
+    pre-commit                # Runs lint-staged (Prettier + ESLint)
+    pre-push                  # Runs full E2E test suite
+  e2e/
+    _shared/
+      fixtures/               # Playwright custom fixtures
+      app-fixtures.ts         # App-level fixture composition
+    demo.test.ts              # E2E test example
+  src/
+    lib/
+      alerts/                 # Alert/notification utilities
+      components/
+        ui/                   # Reusable UI components (shadcn-svelte)
+      data/                   # Static data / constants
+      server/                 # Server-only code (auth, etc.)
+      axios.ts                # Configured HTTP client
+      env.ts                  # Environment variable access
+      utils.ts                # Shared utility functions
+    routes/
+      pokemons/               # Pokemon listing page
+      protected/              # Server-guarded route
+      +layout.js              # Root layout config
+      +layout.svelte          # Root layout component
+      +page.svelte            # Home page
+    app.css                   # Global styles (Tailwind)
+    app.d.ts                  # App-level type declarations
+    app.html                  # HTML shell
+    hooks.client.ts           # Client hooks (Sentry)
+    hooks.server.ts           # Server hooks (Sentry)
+  static/
+    favicon.svg               # Site favicon
+  CLAUDE.md                   # AI project instructions
+  components.json             # shadcn-svelte config
+  eslint.config.js            # ESLint configuration
+  playwright.config.ts        # Playwright test config
+  playwright.monocart-reporter.ts  # Coverage reporter config
+  svelte.config.js            # SvelteKit configuration
+  tsconfig.json               # TypeScript configuration
+  vite.config.ts              # Vite configuration
+```
+
+## AI-Assisted Development (`.claude/`)
+
+This project includes a `.claude/` configuration folder that enables **engineering-grade AI assistance** via [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It encodes the project's coding standards, architectural patterns, and workflows so the AI follows the same rules a senior engineer would.
+
+### What It Provides
+
+- **Scoped rules** — Coding conventions activate only on relevant file types (e.g., Svelte standards apply to `*.svelte` files, TypeScript standards to `*.ts` files), so the AI always follows the right patterns in the right context.
+- **Custom skills** — Reusable prompts for common workflows (e.g., `plan-feature` generates an engineering checklist before writing code).
+- **Post-edit hooks** — Automated ESLint runs after every file edit, catching issues immediately.
+- **Project instructions (`CLAUDE.md`)** — A top-level file that gives the AI full context on the architecture, libraries, and quality pipeline.
+
+### `.claude/` Structure
+
+```
+.claude/
+  rules/
+    coding-conventions.md   # Brace style, no inline returns
+    svelte-standards.md     # Svelte 5 Runes, SvelteKit patterns, SOLID
+    typescript-standards.md # satisfies, type guards, strict rules
+  skills/
+    plan-feature/
+      SKILL.md              # Engineering checklist workflow
+  settings.json             # Post-edit hooks, tool permissions
+```
+
+### How to Use
+
+1. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+2. Open the project — Claude Code automatically reads `CLAUDE.md` and `.claude/`
+3. Ask it to build features, fix bugs, or refactor — it will follow the project's standards
+
 ## Quality Gates
 
 ```mermaid
