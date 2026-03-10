@@ -1,8 +1,8 @@
 ---
 globs:
-  - "src/**/*.ts"
-  - "src/**/*.svelte.ts"
-  - "src/**/*.svelte"
+  - 'src/**/*.ts'
+  - 'src/**/*.svelte.ts'
+  - 'src/**/*.svelte'
 ---
 
 # Coding Conventions

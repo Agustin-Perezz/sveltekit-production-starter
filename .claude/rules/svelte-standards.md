@@ -1,7 +1,7 @@
 ---
 globs:
-  - "src/**/*.svelte"
-  - "src/**/*.svelte.ts"
+  - 'src/**/*.svelte'
+  - 'src/**/*.svelte.ts'
 ---
 
 # Svelte 5 & SvelteKit Standards
@@ -79,8 +79,8 @@ export class UserDashboardState {
 <!-- +page.svelte — orchestrates, owns no logic -->
 <script lang="ts">
   import UserAvatar from './components/UserAvatar.svelte';
-  import { UserDashboardState } from './userDashboard.svelte';
   import UserStats from './components/UserStats.svelte';
+  import { UserDashboardState } from './userDashboard.svelte';
 
   const { data } = $props();
   const dashboard = $derived(new UserDashboardState(data.userId));

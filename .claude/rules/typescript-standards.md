@@ -1,7 +1,7 @@
-e--
+---
 globs:
-  - "src/**/*.ts"
-  - "src/**/*.svelte.ts"
+  - 'src/**/*.ts'
+  - 'src/**/*.svelte.ts'
 ---
 
 # TypeScript Standards
