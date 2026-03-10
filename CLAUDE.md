@@ -38,15 +38,15 @@ Every code change passes through layered quality gates:
 
 ### Key Libraries
 
-| Category | Library |
-|----------|---------|
-| UI Components | `bits-ui`, shadcn-svelte patterns |
-| Forms | `sveltekit-superforms`, `zod` |
-| HTTP | `axios` |
-| Styling | `tailwindcss` v4, `tailwind-merge`, `tailwind-variants`, `tw-animate-css` |
-| Monitoring | `@sentry/sveltekit` |
-| Testing | `@playwright/test`, `monocart-reporter` (V8 coverage) |
-| Code Quality | `eslint`, `prettier`, `husky`, `lint-staged` |
+| Category      | Library                                                                   |
+| ------------- | ------------------------------------------------------------------------- |
+| UI Components | `bits-ui`, shadcn-svelte patterns                                         |
+| Forms         | `sveltekit-superforms`, `zod`                                             |
+| HTTP          | `axios`                                                                   |
+| Styling       | `tailwindcss` v4, `tailwind-merge`, `tailwind-variants`, `tw-animate-css` |
+| Monitoring    | `@sentry/sveltekit`                                                       |
+| Testing       | `@playwright/test`, `monocart-reporter` (V8 coverage)                     |
+| Code Quality  | `eslint`, `prettier`, `husky`, `lint-staged`                              |
 
 ---
 
