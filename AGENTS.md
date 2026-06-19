@@ -28,15 +28,15 @@ Guidance for AI coding agents working on **sveltekit-production-starter** — a 
 
 ## Key libraries
 
-| Category      | Library                                                                   |
-| ------------- | ------------------------------------------------------------------------- |
-| UI            | `bits-ui`, shadcn-svelte patterns                                         |
-| Forms         | `sveltekit-superforms`, `zod`                                             |
-| HTTP          | `axios`                                                                   |
-| Styling       | `tailwindcss` v4, `tailwind-merge`, `tailwind-variants`, `tw-animate-css` |
-| Monitoring    | `@sentry/sveltekit`                                                       |
-| Testing       | `@playwright/test`, `monocart-reporter` (V8 coverage)                     |
-| Code quality   | `eslint`, `prettier`, `husky`, `lint-staged`                              |
+| Category     | Library                                                                   |
+| ------------ | ------------------------------------------------------------------------- |
+| UI           | `bits-ui`, shadcn-svelte patterns                                         |
+| Forms        | `sveltekit-superforms`, `zod`                                             |
+| HTTP         | `axios`                                                                   |
+| Styling      | `tailwindcss` v4, `tailwind-merge`, `tailwind-variants`, `tw-animate-css` |
+| Monitoring   | `@sentry/sveltekit`                                                       |
+| Testing      | `@playwright/test`, `monocart-reporter` (V8 coverage)                     |
+| Code quality | `eslint`, `prettier`, `husky`, `lint-staged`                              |
 
 ## Architecture
 
